@@ -15,6 +15,9 @@
 		2FDD74841ADB595A009E0D82 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FDD74831ADB595A009E0D82 /* Images.xcassets */; };
 		2FDD74871ADB595A009E0D82 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FDD74851ADB595A009E0D82 /* LaunchScreen.xib */; };
 		2FDD74931ADB595A009E0D82 /* TrigBlasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD74921ADB595A009E0D82 /* TrigBlasterTests.swift */; };
+		2FDD74A01ADB5A29009E0D82 /* Collision.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2FDD749D1ADB5A29009E0D82 /* Collision.wav */; };
+		2FDD74A11ADB5A29009E0D82 /* Hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2FDD749E1ADB5A29009E0D82 /* Hit.wav */; };
+		2FDD74A21ADB5A29009E0D82 /* Shoot.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2FDD749F1ADB5A29009E0D82 /* Shoot.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,9 @@
 		2FDD748C1ADB595A009E0D82 /* TrigBlasterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrigBlasterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FDD74911ADB595A009E0D82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FDD74921ADB595A009E0D82 /* TrigBlasterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrigBlasterTests.swift; sourceTree = "<group>"; };
+		2FDD749D1ADB5A29009E0D82 /* Collision.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Collision.wav; sourceTree = "<group>"; };
+		2FDD749E1ADB5A29009E0D82 /* Hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Hit.wav; sourceTree = "<group>"; };
+		2FDD749F1ADB5A29009E0D82 /* Shoot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Shoot.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,7 @@
 				2FDD747E1ADB595A009E0D82 /* GameViewController.swift */,
 				2FDD74801ADB595A009E0D82 /* Main.storyboard */,
 				2FDD74831ADB595A009E0D82 /* Images.xcassets */,
+				2FDD749C1ADB5A29009E0D82 /* Sounds */,
 				2FDD74851ADB595A009E0D82 /* LaunchScreen.xib */,
 				2FDD74761ADB595A009E0D82 /* Supporting Files */,
 			);
@@ -116,6 +123,16 @@
 				2FDD74911ADB595A009E0D82 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2FDD749C1ADB5A29009E0D82 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				2FDD749D1ADB5A29009E0D82 /* Collision.wav */,
+				2FDD749E1ADB5A29009E0D82 /* Hit.wav */,
+				2FDD749F1ADB5A29009E0D82 /* Shoot.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,9 +215,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FDD74A11ADB5A29009E0D82 /* Hit.wav in Resources */,
 				2FDD74871ADB595A009E0D82 /* LaunchScreen.xib in Resources */,
 				2FDD74841ADB595A009E0D82 /* Images.xcassets in Resources */,
+				2FDD74A01ADB5A29009E0D82 /* Collision.wav in Resources */,
 				2FDD747B1ADB595A009E0D82 /* GameScene.sks in Resources */,
+				2FDD74A21ADB5A29009E0D82 /* Shoot.wav in Resources */,
 				2FDD74821ADB595A009E0D82 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +371,7 @@
 				INFOPLIST_FILE = TrigBlaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -361,6 +382,7 @@
 				INFOPLIST_FILE = TrigBlaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
