@@ -24,6 +24,9 @@ class GameScene: SKScene {
     var playerAngle: CGFloat = 0
     var previousAngle: CGFloat = 0
 
+    let cannonSprite = SKSpriteNode(imageNamed: "Cannon")
+    let turretSprite = SKSpriteNode(imageNamed: "Turret")
+
     var accelerometerX: UIAccelerationValue = 0
     var accelerometerY: UIAccelerationValue = 0
 
@@ -40,7 +43,13 @@ class GameScene: SKScene {
 
         backgroundColor = SKColor(red: 94.0/255, green: 63.0/255, blue: 107.0/255, alpha: 1.0)
 
-        playerSprite.position = CGPoint(x: (size.width - playerSprite.size.width)/2, y: (size.height - playerSprite.size.height)/2)
+        cannonSprite.position = CGPoint(x: size.width/2, y: size.height/2)
+        addChild(cannonSprite)
+
+        turretSprite.position = CGPoint(x: size.width/2, y: size.height/2)
+        addChild(turretSprite)
+
+        playerSprite.position = CGPoint(x: size.width * 0.90, y: (size.height - playerSprite.size.height)*0.1)
         addChild(playerSprite)
 
         startMonitoringAcceleration()
@@ -52,6 +61,7 @@ class GameScene: SKScene {
 
         updatePlayerAccelerationFromMotionManager()
         updatePlayer(deltaTime)
+        updateTurret(deltaTime)
     }
 
     func startMonitoringAcceleration() {
@@ -130,8 +140,8 @@ class GameScene: SKScene {
             playerVelocity.dy = -playerVelocity.dy * BorderCollisionDamping
         }
 
-        println("newX: \(newX)")
-        println("newY: \(newY)")
+//        println("newX: \(newX)")
+//        println("newY: \(newY)")
 
         playerSprite.position = CGPoint(x: newX, y: newY)
 
@@ -152,5 +162,14 @@ class GameScene: SKScene {
             playerSprite.zRotation = playerAngle - 90 * DegreesToRadians
         }
 
+    }
+
+    func updateTurret(dt: CFTimeInterval) {
+        let deltaX = playerSprite.position.x - turretSprite.position.x
+        let deltaY = playerSprite.position.y - turretSprite.position.y
+
+        let angle = atan2(deltaY, deltaX)
+
+        turretSprite.zRotation = angle - 90 * DegreesToRadians
     }
 }
