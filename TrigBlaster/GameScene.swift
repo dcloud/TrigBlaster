@@ -9,14 +9,20 @@
 import SpriteKit
 import CoreMotion
 
-let MaxPlayerAcceleration: CGFloat = 400
-let MaxPlayerSpeed: CGFloat = 200
+let MaxPlayerAcceleration: CGFloat = 200
+let MaxPlayerSpeed: CGFloat = 150
+let BorderCollisionDamping: CGFloat = 0.4
+let Pi = CGFloat(M_PI)
+let DegreesToRadians = Pi / 180
+let RadiansToDegrees = 180 / Pi
 
 class GameScene: SKScene {
 
     let playerSprite = SKSpriteNode(imageNamed: "Player")
     var playerAcceleration = CGVector(dx: 0, dy: 0)
     var playerVelocity = CGVector(dx: 0, dy: 0)
+    var playerAngle: CGFloat = 0
+    var previousAngle: CGFloat = 0
 
     var accelerometerX: UIAccelerationValue = 0
     var accelerometerY: UIAccelerationValue = 0
@@ -87,12 +93,64 @@ class GameScene: SKScene {
         var newX = playerSprite.position.x + playerVelocity.dx * CGFloat(dt)
         var newY = playerSprite.position.y + playerVelocity.dy * CGFloat(dt)
 
-        newX = min(size.width, max(0, newX));
-        newY = min(size.height, max(0, newY));
+        // Not the way to do it if we want to bounce
+//        newX = min(size.width, max(0, newX));
+//        newY = min(size.height, max(0, newY));
+
+        var collidedWithVerticalBorder = false
+        var collidedWithHorizontalBorder = false
+
+        if newX < 0 {
+            newX = 0
+            collidedWithVerticalBorder = true
+        } else if newX > size.width {
+            newX = size.width
+            collidedWithVerticalBorder = true
+        }
+
+        if newY < 0 {
+            newY = 0
+            collidedWithHorizontalBorder = true
+        } else if newY > size.height {
+            newY = size.height
+            collidedWithHorizontalBorder = true
+        }
+
+        if collidedWithVerticalBorder {
+            playerAcceleration.dx = -playerAcceleration.dx * BorderCollisionDamping
+            playerVelocity.dx = -playerVelocity.dx * BorderCollisionDamping
+            playerAcceleration.dy = playerAcceleration.dy * BorderCollisionDamping
+            playerVelocity.dy = playerVelocity.dy * BorderCollisionDamping
+        }
+
+        if collidedWithHorizontalBorder {
+            playerAcceleration.dx = playerAcceleration.dx * BorderCollisionDamping
+            playerVelocity.dx = playerVelocity.dx * BorderCollisionDamping
+            playerAcceleration.dy = -playerAcceleration.dy * BorderCollisionDamping
+            playerVelocity.dy = -playerVelocity.dy * BorderCollisionDamping
+        }
 
         println("newX: \(newX)")
         println("newY: \(newY)")
 
         playerSprite.position = CGPoint(x: newX, y: newY)
+
+        let RotationBlendFactor: CGFloat = 0.2
+        let RotationThreshold: CGFloat = 40
+        let speed = sqrt(playerVelocity.dx * playerVelocity.dx + playerVelocity.dy * playerVelocity.dy)
+        if speed > RotationThreshold {
+            let angle = atan2(playerVelocity.dy, playerVelocity.dx)
+
+            if angle - previousAngle > Pi {
+                playerAngle += 2 * Pi
+            } else if previousAngle - angle > Pi {
+                playerAngle -= 2 * Pi
+            }
+
+            previousAngle = angle
+            playerAngle = angle * RotationBlendFactor + playerAngle * (1 - RotationBlendFactor)
+            playerSprite.zRotation = playerAngle - 90 * DegreesToRadians
+        }
+
     }
 }
